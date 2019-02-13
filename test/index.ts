@@ -1,17 +1,32 @@
 
-import * as test from 'tape';
-import { JSDOM, DOMWindow } from 'jsdom';
+import * as test from 'tape'
+import { JSDOM, DOMWindow } from 'jsdom'
 
-const initPage = (): Promise<{ window: DOMWindow, document: Document }> =>
-  JSDOM.fromFile('./src/index.html').then((dom: JSDOM) => ({
-    window: dom.window,
-    document: dom.window.document
-  }));
+// initPage function allows to load the page within a promise
+const initPage = (): Promise<{
+  window: DOMWindow,
+  document: Document
+}> =>
+  JSDOM.fromFile('./src/index.html')
+    .then((dom: JSDOM) => ({
+      window: dom.window,
+      document: dom.window.document
+    }))
 
-test('Doing something interesting', (t: test.Test) => {
-  t.plan(1);
+// Test example
+test('Doing something interesting',(t: test.Test) => {
+  t.plan(1)
 
-  initPage().then(({ document }) => {
-    t.ok(document.querySelector('div').tagName === 'DIV', 'ok');
-  });
-});
+  initPage()
+    .then(({ window, document }) => {
+      const div = document.querySelector('div')
+
+      t.ok(
+        div instanceof window.HTMLDivElement,
+        'Finally HTMLDivElement'
+      )
+    })
+    .catch(reason => {
+      console.error(reason)
+    })
+})

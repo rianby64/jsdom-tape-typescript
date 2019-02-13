@@ -2,9 +2,9 @@
   "name": "jsdom-boilerplate",
   "version": "1.0.0",
   "description": "Boilerplate for using JSOM with Tape in NodeJS",
-  "main": "index.js",
   "scripts": {
-    "test": "npx ts-node ./test/index.ts"
+    "lint": "tslint --project tsconfig.json",
+    "test": "ts-node ./node_modules/tape/bin/tape \"./test/**/*.ts\" --project tsconfig.json"
   },
   "author": "Andres Rios <rianby64@gmail.com>",
   "license": "ISC",
@@ -14,6 +14,8 @@
     "jsdom": "^13.2.0",
     "tape": "^4.10.0",
     "ts-node": "^8.0.2",
+    "tslint": "^5.12.1",
+    "tslint-config-standard": "^8.0.1",
     "typescript": "^3.3.3"
   }
 }
