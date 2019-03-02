@@ -1,27 +1,11 @@
 
-import * as test from 'tape'
-import { JSDOM, DOMWindow } from 'jsdom'
-
-interface JustFun {
-  document: Document,
-  window: DOMWindow,
-}
-
-const justFun = ((fn: Function) => {
-  JSDOM.fromFile('./src/index.html', {
-    runScripts: 'dangerously',
-    resources: 'usable'
-  })
-    .then((dom: JSDOM) => setTimeout(() =>
-      fn({ document: dom.window.document, window: dom.window }), 0))
-    .catch(reason => console.error(reason))
-})
+import test, { run } from './helpers/run'
 
 // Test example
 test('Doing something interesting',(t: test.Test) => {
   t.plan(1)
 
-  justFun(({ document, window }: JustFun) => {
+  run(({ document, window }) => {
     const div = document.querySelector('div')
 
     t.ok(div instanceof window.HTMLDivElement, 'div is present')
@@ -32,7 +16,7 @@ test('Doing something interesting',(t: test.Test) => {
 test('Click pressed',(t: test.Test) => {
   t.plan(3)
 
-  justFun(({ document, window }: JustFun) => {
+  run(({ document, window }) => {
     const button = document.querySelector('button')
     const span = document.querySelector('span')
 
